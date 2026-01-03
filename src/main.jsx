@@ -5,8 +5,10 @@ import './index.css'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <BrowserRouter basename="/namma-react/">
     <ToastProvider>
       <App />
     </ToastProvider>
+    </BrowserRouter>
   </React.StrictMode>
 )
