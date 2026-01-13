@@ -18,7 +18,7 @@ export default function Footer() {
           <motion.a whileHover={{ y: -5 }} href="https://www.facebook.com/p/Namma-Ooru-Smart-Solutions-100064102116943/" target="_blank" rel="noopener noreferrer" className="bg-slate-800 p-2.5 sm:p-3 rounded-full text-slate-400 hover:bg-blue-600 hover:text-white transition-all shadow-md hover:shadow-blue-600/30">
             <Facebook size={18} className="sm:w-5 sm:h-5" />
           </motion.a>
-          <motion.a whileHover={{ y: -5 }} href="https://www.instagram.com/namma_ooru_department_store/" target="_blank" rel="noopener noreferrer" className="bg-slate-800 p-2.5 sm:p-3 rounded-full text-slate-400 hover:bg-pink-600 hover:text-white transition-all shadow-md hover:shadow-pink-600/30">
+          <motion.a whileHover={{ y: -5 }} href="https://www.instagram.com/namma_ooru_smart_solutions/" target="_blank" rel="noopener noreferrer" className="bg-slate-800 p-2.5 sm:p-3 rounded-full text-slate-400 hover:bg-pink-600 hover:text-white transition-all shadow-md hover:shadow-pink-600/30">
             <Instagram size={18} className="sm:w-5 sm:h-5" />
           </motion.a>
           <motion.a whileHover={{ y: -5 }} href="https://wa.me/918883785516" target="_blank" rel="noopener noreferrer" className="bg-slate-800 p-2.5 sm:p-3 rounded-full text-slate-400 hover:bg-green-500 hover:text-white transition-all shadow-md hover:shadow-green-500/30">
