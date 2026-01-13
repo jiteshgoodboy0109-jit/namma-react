@@ -4,7 +4,6 @@ import Hero from './components/Hero.jsx'
 import ProductCard from './components/ProductCard.jsx'
 import CartDrawer from './components/CartDrawer.jsx'
 import ProductDetailModal from './components/ProductDetailModal.jsx'
-import WhatsAppFloat from './components/WhatsAppFloat.jsx'
 import SectionTitle from './components/SectionTitle.jsx'
 import Services from './components/Services.jsx'
 import Mission from './components/Mission.jsx'
@@ -12,6 +11,7 @@ import TrustStats from './components/TrustStats.jsx'
 import BrandsStrip from './components/BrandsStrip.jsx'
 import ContactSection from './components/ContactSection.jsx'
 import Footer from './components/Footer.jsx'
+import Bill from './components/Bill.jsx'
 import { products as PRODUCTS } from './data/products.js'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Plus } from 'lucide-react'
@@ -57,6 +57,8 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [filterCategory, setFilterCategory] = useState('All')
+  const [showBillPage, setShowBillPage] = useState(false)
+  const [customerInfo, setCustomerInfo] = useState(null)
   const [lang, setLang] = useState('en')
   const [shopName, setShopName] = useState('NAMMA OORU')
   const { addToast } = useToast()
@@ -85,6 +87,18 @@ export default function App() {
       return next
     })
   }
+  const handleCheckout = (customerInfo) => {
+    // Store customer info and show bill page
+    setCustomerInfo(customerInfo)
+    setShowBillPage(true)
+    addToast('Proceeding to invoice...', 'success')
+  }
+  const handleBackHome = () => {
+    setShowBillPage(false)
+    setCart([])
+    setCustomerInfo(null)
+    scrollToSection('home')
+  }
   const openProduct = (product) => setSelectedProduct(product)
   const scrollToSection = (id) => {
     setIsMenuOpen(false)
@@ -109,11 +123,19 @@ export default function App() {
   const onNavigate = (id) => scrollToSection(id)
   const filteredProducts = filterCategory === 'All' ? PRODUCTS : PRODUCTS.filter((p) => p.category === filterCategory)
 
+  // Show Bill page if checkout completed
+  if (showBillPage && cart.length > 0) {
+    return (
+      <ToastProvider>
+        <Bill cartItems={cart} customerInfo={customerInfo} onCheckoutComplete={handleCheckout} onBackHome={handleBackHome} />
+      </ToastProvider>
+    )
+  }
+
   return (
     <ToastProvider>
       <div className="min-h-screen bg-white font-sans overflow-x-hidden text-slate-900">
-        <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cartItems={cart} onRemove={removeFromCart} />
-        <WhatsAppFloat />
+        <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cartItems={cart} onRemove={removeFromCart} onCheckout={handleCheckout} />
         <Navbar
           scrolled={scrolled}
           cartCount={cart.length}

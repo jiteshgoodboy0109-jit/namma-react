@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ShoppingCart } from 'lucide-react'
-import logo from '../../public/logo.png'
+const logo = '/log png.png'
 export default function Navbar({ scrolled, cartCount, isMenuOpen, setIsMenuOpen, onCartOpen, onNavigate, lang, shopName }) {
   const navItems = [
     { name: 'Home', id: 'home' },
@@ -11,15 +11,16 @@ export default function Navbar({ scrolled, cartCount, isMenuOpen, setIsMenuOpen,
   ]
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ease-in-out ${scrolled ? 'bg-white/95 border-b border-slate-200/50 shadow-sm' : 'bg-transparent'} backdrop-blur-md`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ease-in-out bg-transparent backdrop-blur-md`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 md:h-24">
           <div className="flex items-center cursor-pointer gap-3" onClick={() => onNavigate('home')}>
             <motion.img
-              whileHover={{ rotate: 10, scale: 1.1 }}
+              whileHover={{ rotate: 5, scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
               src={logo}
               alt="Logo"
-              className="h-12 md:h-16 w-auto object-contain rounded-full border-2 border-slate-900"
+              className="h-12 md:h-16 w-auto object-contain drop-shadow-lg transition-all duration-300 hover:drop-shadow-xl"
             />
             <div className="flex flex-col justify-center">
               <AnimatePresence mode="wait">

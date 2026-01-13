@@ -20,7 +20,7 @@ export default function WhatsAppFloat() {
         Chat Now
       </span>
       <span className="absolute right-full mr-4 bg-white text-slate-800 px-4 py-2 rounded-xl text-sm font-bold shadow-2xl opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none border border-slate-200">
-        💬 Need Help? Chat with us!
+        💬 Need Help? 
       </span>
     </motion.a>
   )
