@@ -17,12 +17,28 @@ export default function ContactForm() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setStatus('loading')
+
+    // Format message for WhatsApp
+    const message = `👋 *New Inquiry from Website*
+
+👤 *Name:* ${formData.name}
+📞 *Phone:* ${formData.phone}
+📝 *Project Details:*
+${formData.message}
+
+Please reply to this inquiry.`.trim()
+
+    const encodedMessage = encodeURIComponent(message)
+    const whatsappUrl = `https://wa.me/918883785516?text=${encodedMessage}`
+
+    // Small delay to show loading state then redirect
     setTimeout(() => {
       setStatus('success')
       fireConfettiSequence()
+      window.open(whatsappUrl, '_blank')
       setFormData({ name: '', phone: '', message: '' })
       setTimeout(() => setStatus('idle'), 5000)
-    }, 1500)
+    }, 1000)
   }
 
   return (
@@ -52,7 +68,7 @@ export default function ContactForm() {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className="text-3xl font-black text-slate-900 mb-2"
             >
-              Message Sent!
+              Opening WhatsApp...
             </motion.h3>
             <motion.p
               initial={{ y: 12, opacity: 0 }}
@@ -60,7 +76,7 @@ export default function ContactForm() {
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
               className="text-slate-500 max-w-xs mx-auto"
             >
-              Thanks for reaching out. We’ll contact you shortly.
+              Redirecting you to chat with our experts directly.
             </motion.p>
             <motion.div
               initial={{ width: 0, opacity: 0 }}
@@ -68,29 +84,6 @@ export default function ContactForm() {
               transition={{ duration: 0.7, ease: 'easeInOut', delay: 0.2 }}
               className="h-1.5 rounded-full bg-gradient-to-r from-green-500 via-teal-400 to-emerald-500 mt-4"
             />
-            <div className="relative w-full mt-8">
-              <div className="absolute inset-0">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6 }}
-                  className="mx-auto w-64 h-64 rounded-full blur-3xl bg-gradient-to-tr from-green-200 via-teal-200 to-emerald-100 opacity-60"
-                />
-              </div>
-              <div className="relative flex items-center justify-center gap-4">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ y: 20, opacity: 0, rotate: -10 }}
-                    animate={{ y: [20, -12, 0], opacity: [0, 1, 1], rotate: [ -10, 10, 0 ] }}
-                    transition={{ duration: 2, delay: 0.15 * i, repeat: Infinity, repeatType: 'reverse' }}
-                    className="p-2 rounded-full bg-white shadow-md text-yellow-500"
-                  >
-                    <Sparkles size={20} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
           </motion.div>
         ) : (
           <motion.form
@@ -108,7 +101,7 @@ export default function ContactForm() {
                   type="text"
                   required
                   className="w-full px-5 py-4 rounded-xl border-2 border-gray-100 text-base focus:ring-0 focus:border-green-500 outline-none transition-all duration-300 font-medium bg-gray-50"
-                  placeholder="John Doe"
+                  placeholder="Your Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
@@ -119,19 +112,19 @@ export default function ContactForm() {
                   type="tel"
                   required
                   className="w-full px-5 py-4 rounded-xl border-2 border-gray-100 text-base focus:ring-0 focus:border-green-500 outline-none transition-all duration-300 font-medium bg-gray-50"
-                  placeholder="+91 90000 00000"
+                  placeholder="+91 Phone Number"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider mb-2 text-slate-500">Project Details</label>
+              <label className="block text-xs font-bold uppercase tracking-wider mb-2 text-slate-500">How can we help?</label>
               <textarea
                 required
                 rows={4}
                 className="w-full px-5 py-4 rounded-xl border-2 border-gray-100 text-base focus:ring-0 focus:border-green-500 outline-none transition-all duration-300 font-medium bg-gray-50"
-                placeholder="I need a Solar Water Heater..."
+                placeholder="I am interested in..."
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               />
@@ -143,7 +136,7 @@ export default function ContactForm() {
               disabled={status === 'loading'}
               className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-xl shadow-green-500/20 transition-all ${status === 'loading' ? 'bg-slate-400' : 'bg-gradient-to-r from-green-600 to-teal-500 hover:to-green-500'}`}
             >
-              {status === 'loading' ? 'Sending...' : 'Send Message'}
+              {status === 'loading' ? 'Processing...' : 'Send via WhatsApp'}
             </motion.button>
           </motion.form>
         )}
