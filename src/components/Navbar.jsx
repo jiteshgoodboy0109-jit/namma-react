@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ShoppingCart, ArrowRight } from 'lucide-react'
+import { Menu, X, ShoppingCart, ArrowRight, Search, User, ChevronDown } from 'lucide-react'
 const logo = '/log png.png'
 export default function Navbar({ scrolled, cartCount, isMenuOpen, setIsMenuOpen, onCartOpen, onNavigate, lang, shopName }) {
   const navItems = [
@@ -29,7 +29,7 @@ export default function Navbar({ scrolled, cartCount, isMenuOpen, setIsMenuOpen,
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
-                  className={`text-2xl md:text-3xl font-black tracking-tight leading-none text-slate-900 ${lang === 'ta' ? 'shopname-tamil' : 'shopname-english'}`}
+                  className={`text-2xl md:text-3xl font-black tracking-tight leading-none ${lang === 'ta' ? 'shopname-tamil' : 'shopname-english'}`}
                 >
                   {shopName}
                 </motion.span>
@@ -108,9 +108,20 @@ export default function Navbar({ scrolled, cartCount, isMenuOpen, setIsMenuOpen,
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 bg-white/95 backdrop-blur-xl z-40 flex flex-col pt-32 px-8 pb-12 overflow-y-auto"
+            className="fixed inset-0 bg-white z-[100] flex flex-col min-h-screen overflow-y-auto"
           >
-            <div className="flex flex-col gap-4 mt-2">
+            {/* Top Header Bar - Minimal: Just Close Button */}
+            <div className="flex items-center justify-end px-6 py-6 border-b border-slate-50">
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="bg-[#1b5e20] text-white p-2 rounded-md hover:bg-green-800 transition-colors shadow-lg"
+              >
+                <X size={28} strokeWidth={2} />
+              </button>
+            </div>
+
+            {/* Menu Items - Full View */}
+            <div className="flex flex-col px-6 pt-6 gap-2">
               {navItems.map((item, idx) => (
                 <motion.button
                   key={item.id}
@@ -118,41 +129,26 @@ export default function Navbar({ scrolled, cartCount, isMenuOpen, setIsMenuOpen,
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 + idx * 0.05 }}
                   onClick={() => { onNavigate(item.id); setIsMenuOpen(false) }}
-                  className="w-full text-left py-4 text-4xl font-bold text-slate-800 hover:text-green-500 transition-colors flex items-center justify-between group"
+                  // Clean, premium list style
+                  className="w-full text-left py-5 border-b border-slate-100 flex items-center justify-between group active:scale-[0.99] transition-transform"
                 >
-                  <span className="tracking-tight">{item.name}</span>
-                  <span className="opacity-0 group-hover:opacity-100 transform translate-x-[-20px] group-hover:translate-x-0 transition-all text-green-500">
-                    <ArrowRight size={32} />
-                  </span>
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="text-2xl font-bold text-slate-900 group-hover:text-green-700 transition-colors tracking-tight">
+                      {item.name}
+                    </span>
+                    {item.id === 'products' && (
+                      <span className="bg-[#1b5e20] text-white text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                        Season Deals
+                      </span>
+                    )}
+                  </div>
+                  <ChevronDown size={24} className="text-slate-300 group-hover:text-green-700 transition-colors" />
                 </motion.button>
               ))}
-              <div className="h-px bg-slate-100 my-4 w-full" />
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                onClick={() => { onCartOpen(); setIsMenuOpen(false) }}
-                className="w-full bg-slate-900 text-white py-6 rounded-2xl font-bold text-xl shadow-lg hover:shadow-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-4 active:scale-95"
-              >
-                <ShoppingCart size={24} />
-                <span>Your Cart</span>
-                {cartCount > 0 && (
-                  <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold min-w-[2rem]">{cartCount}</span>
-                )}
-              </motion.button>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-auto pt-10 text-center space-y-2"
-            >
-              <p className="text-slate-400 text-xs font-bold tracking-widest uppercase">Premium Energy Solutions</p>
-              <div className="flex justify-center gap-4">
-                {/* Add small social icons or verified badge if needed later */}
-              </div>
-            </motion.div>
+            {/* No footer, clean space */}
+            <div className="flex-grow bg-slate-50/30 mt-8"></div>
           </motion.div>
         )}
       </AnimatePresence>
