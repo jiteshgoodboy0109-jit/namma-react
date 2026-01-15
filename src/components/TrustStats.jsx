@@ -1,11 +1,11 @@
-import { Award, Users, ShieldCheck, Headphones } from 'lucide-react'
+import { Award, Users, ShieldCheck, Headphones, Phone } from 'lucide-react'
 
 export default function TrustStats() {
   const items = [
     { icon: Award, value: '10+', label: 'Years Experience', color: 'bg-blue-50 text-blue-600' },
-    { icon: Users, value: '500+', label: 'Happy Clients', color: 'bg-green-50 text-green-600' },
+    { icon: Users, value: '1000+', label: 'Happy Clients', color: 'bg-green-50 text-green-600' },
     { icon: ShieldCheck, value: '100%', label: 'Secure Warranty', color: 'bg-yellow-50 text-yellow-600' },
-    { icon: Headphones, value: '24/7', label: 'Support Team', color: 'bg-purple-50 text-purple-600' }
+    { icon: Phone, value: '24/7', label: 'Support Team', color: 'bg-purple-50 text-purple-600' }
   ]
   return (
     <section className="relative z-20 mt-0 md:-mt-24 pb-12 px-4">

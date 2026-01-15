@@ -29,7 +29,10 @@ export default function Navbar({ scrolled, cartCount, isMenuOpen, setIsMenuOpen,
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
-                  className={`text-2xl md:text-3xl font-black tracking-tight leading-none ${lang === 'ta' ? 'shopname-tamil' : 'shopname-english'}`}
+                  className={`text-2xl md:text-3xl font-black tracking-tight leading-none ${lang === 'ta'
+                      ? 'shopname-tamil text-[#1e3a8a]'
+                      : 'shopname-english text-[#dc2626]'
+                    }`}
                 >
                   {shopName}
                 </motion.span>
