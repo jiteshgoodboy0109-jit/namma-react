@@ -29,10 +29,10 @@ export default function Bill({ cartItems, customerInfo, onCheckoutComplete, onBa
   const companyData = {
     name: 'NAMMA OORU SMART SOLUTIONS',
     tagline: 'Smart Energy & Automation',
-    address: '123 Main Street, Bangalore, Karnataka - 560001', // Example address
+    address: '', // Address removed as per request
     mobile: '+91 8883785516',
-    email: 'contact@nammaooru.com',
-    website: 'www.nammaooru.com'
+    email: 'contact@nammaoorusmartsolutions.com',
+    website: 'www.nammaoorusmartsolutions.com'
   }
 
   // Calculate total (no GST for now, can be added)
@@ -41,28 +41,59 @@ export default function Bill({ cartItems, customerInfo, onCheckoutComplete, onBa
     return sum + price
   }, 0)
 
+  // Helper to convert number to words (Indian numbering system approximation)
+  const numberToWords = (num) => {
+    const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen ']
+    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
+
+    if ((num = num.toString()).length > 9) return 'overflow'
+    const n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/)
+    if (!n) return ''
+    let str = ''
+    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Crore ' : ''
+    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : ''
+    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : ''
+    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : ''
+    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : ''
+    return str.trim()
+  }
+
   // Auto-redirect to WhatsApp on component mount
   useEffect(() => {
     const sendToWhatsApp = () => {
       const productDetails = cartItems
-        .map(item => `• ${item.name} `)
+        .map(item => `${item.name.padEnd(40, ' ')} ₹${item.price}`)
         .join('\n')
 
-      const message = `🧾 *INVOICE REQUEST*
-      
-Invoice: ${invoiceNumber}
-Date: ${invoiceDate}
+      const amountInWords = numberToWords(total)
+      const ownerPhone = companyData.mobile.replace('+91 ', '')
 
-*Customer Details:*
-Name: ${customer.name}
-Phone: ${customer.phone}
+      // Using code block ``` so WhatsApp preserves some spacing/alignment
+      // Compact spacing for mobile readability
+      const message = `\`\`\`
+                 NAMMA OORU SMART SOLUTIONS
+           Smart Local Digital Service Partner
 
-*Order Summary:*
-${productDetails}
+Mobile: +91 ${ownerPhone}          Inv: ${invoiceNumber}
+                                  Date: ${invoiceDate}
+                                  Status: UNPAID
 
-*Total Amount: ₹${total.toLocaleString('en-IN')}*
+BILL TO                         ISSUED BY
+${customer.name.padEnd(28, ' ')}    Namma Ooru Smart Solutions
+Ph: ${customer.phone.padEnd(24, ' ')}    Tamil Nadu, India
 
-Please confirm my order. Thank you!`.trim()
+DESCRIPTION                     AMOUNT
+${cartItems.map(item => `${item.name.substring(0, 25).padEnd(28, ' ')} ₹${item.price}`).join('\n')}
+
+TOTAL PAYABLE                   ₹${total.toLocaleString('en-IN')}
+
+Amount in Words:
+${amountInWords} Only
+
+For Namma Ooru Smart Solutions
+
+Authorized Signatory
+\`\`\``.trim()
 
       const encodedMessage = encodeURIComponent(message)
       const waLink = `https://wa.me/${OWNER_WHATSAPP_NUMBER}?text=${encodedMessage}`
@@ -132,15 +163,15 @@ Please confirm my order. Thank you!`.trim()
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-green-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
 
             {/* Header */}
-            <header className="flex justify-between items-start border-b-2 border-slate-100 pb-8 mb-8 relative z-10">
+            <header className="flex justify-between items-center border-b-2 border-slate-100 pb-8 mb-8 relative z-10">
               <div>
                 <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase mb-2">Invoice</h1>
                 <p className="text-slate-500 font-medium">#{invoiceNumber}</p>
               </div>
-              <div className="text-right">
+              <div className="text-right flex flex-col items-end">
+                <img src="/log png.png" alt="Logo" className="h-24 w-auto mb-2 object-contain" />
                 <h2 className="text-xl font-bold text-slate-800">{companyData.name}</h2>
                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mb-1">{companyData.tagline}</p>
-                <p className="text-sm text-slate-600">{companyData.address}</p>
                 <p className="text-sm text-slate-600">Ph: {companyData.mobile}</p>
                 <p className="text-sm text-slate-600 text-blue-600">{companyData.website}</p>
               </div>
