@@ -9,10 +9,10 @@ export default function WhatsAppFloat({ count, onClick }) {
       animate={{ scale: 1 }}
       whileHover={{ scale: 1.1, rotate: -5 }}
       whileTap={{ scale: 0.9 }}
-      className="fixed bottom-6 right-6 z-[80] bg-slate-900 text-white p-4 rounded-full shadow-2xl flex items-center justify-center group border-2 border-white/20 hover:border-green-400 transition-colors"
+      className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[80] bg-slate-900 text-white p-3 md:p-4 rounded-full shadow-2xl flex items-center justify-center group border-2 border-white/20 hover:border-green-400 transition-colors"
     >
       <div className="relative">
-        <ShoppingCart size={28} strokeWidth={2} className="fill-none group-hover:fill-white/10 transition-colors" />
+        <ShoppingCart className="w-5 h-5 md:w-7 md:h-7 fill-none group-hover:fill-white/10 transition-colors" strokeWidth={2} />
         <AnimatePresence>
           {count > 0 && (
             <motion.span
