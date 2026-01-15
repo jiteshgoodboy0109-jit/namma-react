@@ -15,6 +15,7 @@ import Bill from './components/Bill.jsx'
 import { products as PRODUCTS } from './data/products.js'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Plus } from 'lucide-react'
+import WhatsAppFloat from './components/WhatsAppFloat.jsx'
 
 const ToastContext = createContext()
 export function ToastProvider({ children }) {
@@ -36,9 +37,8 @@ export function ToastProvider({ children }) {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className={`p-4 rounded-xl shadow-2xl flex items-center gap-3 backdrop-blur-md border pointer-events-auto ${
-                toast.type === 'success' ? 'bg-slate-900/90 text-white border-green-500/50' : 'bg-red-900/90 text-white border-red-500/50'
-              }`}
+              className={`p-4 rounded-xl shadow-2xl flex items-center gap-3 backdrop-blur-md border pointer-events-auto ${toast.type === 'success' ? 'bg-slate-900/90 text-white border-green-500/50' : 'bg-red-900/90 text-white border-red-500/50'
+                }`}
             >
               <span className="font-bold text-sm">{toast.message}</span>
             </motion.div>
@@ -161,9 +161,8 @@ export default function App() {
               <button
                 key={cat}
                 onClick={() => setFilterCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all duration-200 border ${
-                  filterCategory === cat ? 'bg-slate-900 text-white shadow-lg scale-105 border-slate-900' : 'bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-900 border-slate-200'
-                }`}
+                className={`px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all duration-200 border ${filterCategory === cat ? 'bg-slate-900 text-white shadow-lg scale-105 border-slate-900' : 'bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-900 border-slate-200'
+                  }`}
               >
                 {cat}
               </button>
@@ -221,6 +220,7 @@ export default function App() {
         <BrandsStrip />
         <ContactSection />
         <Footer />
+        <WhatsAppFloat count={cart.length} onClick={() => setIsCartOpen(true)} />
       </div>
     </ToastProvider>
   )

@@ -31,8 +31,8 @@ export default function Bill({ cartItems, customerInfo, onCheckoutComplete, onBa
     tagline: 'Smart Energy & Automation',
     address: '', // Address removed as per request
     mobile: '+91 8883785516',
-    email: 'contact@nammaoorusmartsolutions.com',
-    website: 'www.nammaoorusmartsolutions.com'
+    email: 'contact@nammaooru.com',
+    website: 'www.nammaooru.com'
   }
 
   // Calculate total (no GST for now, can be added)
@@ -163,17 +163,17 @@ Authorized Signatory
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-green-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
 
             {/* Header */}
-            <header className="flex justify-between items-center border-b-2 border-slate-100 pb-8 mb-8 relative z-10">
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-slate-100 pb-8 mb-8 relative z-10 gap-6 md:gap-0">
               <div>
                 <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase mb-2">Invoice</h1>
                 <p className="text-slate-500 font-medium">#{invoiceNumber}</p>
               </div>
-              <div className="text-right flex flex-col items-end">
-                <img src="/log png.png" alt="Logo" className="h-24 w-auto mb-2 object-contain" />
-                <h2 className="text-xl font-bold text-slate-800">{companyData.name}</h2>
+              <div className="text-left md:text-right flex flex-col items-start md:items-end w-full md:w-auto">
+                <img src="/log png.png" alt="Logo" className="h-20 w-auto mb-2 object-contain" />
+                <h2 className="text-xl font-bold text-slate-800 uppercase tracking-tight">{companyData.name}</h2>
                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mb-1">{companyData.tagline}</p>
                 <p className="text-sm text-slate-600">Ph: {companyData.mobile}</p>
-                <p className="text-sm text-slate-600 text-blue-600">{companyData.website}</p>
+                <p className="text-sm text-slate-600 text-blue-600 font-bold">{companyData.website}</p>
               </div>
             </header>
 
